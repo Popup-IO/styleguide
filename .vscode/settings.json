@@ -1,0 +1,6 @@
+{
+	"eslint.experimental.useFlatConfig": true,
+	"eslint.format.enable": true,
+	"editor.rulers": [80],
+	"editor.tabSize": 2
+}

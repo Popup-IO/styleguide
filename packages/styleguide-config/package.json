@@ -1,0 +1,31 @@
+{
+	"name": "@popup-io/styleguide-config",
+	"version": "0.0.1",
+	"main": "dist/index.js",
+	"type": "module",
+	"exports": {
+		"./eslint-config": {
+			"import": "./dist/eslint-config.js",
+			"require": "./dist/eslint-config.cjs"
+		}
+	},
+	"dependencies": {
+		"@eslint/js": "^8.38.0",
+		"@tsconfig/next": "^1.0.5",
+		"@tsconfig/recommended": "^1.0.2",
+		"@tsconfig/strictest": "^2.0.0",
+		"@types/eslint": "^8.37.0",
+		"@typescript-eslint/eslint-plugin": "^6.0.0-alpha.131",
+		"@typescript-eslint/parser": "^6.0.0-alpha.131",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-react": "^7.32.2",
+		"globals": "^13.20.0"
+	},
+	"scripts": {
+		"build": "tsup",
+		"watch": "tsup --watch"
+	},
+	"peerDependencies": {
+		"eslint": "^8.38.0"
+	}
+}

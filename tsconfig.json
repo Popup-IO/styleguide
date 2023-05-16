@@ -1,0 +1,7 @@
+{
+	"extends": ["./packages/styleguide-config/assets/tsconfig.json"],
+	"include": ["packages/**/*", "*"],
+	"compilerOptions": {
+		"tsBuildInfoFile": "./"
+	}
+}

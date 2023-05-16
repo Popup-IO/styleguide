@@ -1,0 +1,14 @@
+{
+	"extends": [
+		"@tsconfig/strictest/tsconfig.json",
+		"@tsconfig/recommended/tsconfig",
+		"@tsconfig/next/tsconfig.json"
+	],
+	"compilerOptions": {
+		"moduleResolution": "node16",
+		// This is exactly the same as @tsconfig/next/tsconfig.json (which should
+		// take precedence) but it is not picked up by tsup if not explicitly
+		// repeated here.
+		"target": "ESNext"
+	}
+}
