@@ -1,6 +1,9 @@
 {
 	"name": "@popup-io/eslint-and-prettier",
 	"version": "0.0.1",
+	"publishConfig": {
+		"access": "public"
+	},
 	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {

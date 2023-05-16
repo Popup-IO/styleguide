@@ -1,6 +1,9 @@
 {
 	"name": "@popup-io/styleguide-install",
 	"version": "0.0.1",
+	"publishConfig": {
+		"access": "public"
+	},
 	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {
