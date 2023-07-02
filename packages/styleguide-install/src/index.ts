@@ -4,6 +4,7 @@ import fs from "fs-extra";
 import { z } from "zod";
 import inquirer from "inquirer";
 import configPackageJson from "../../styleguide-config/package.json";
+import eslintAndPrettierPackageJson from "../../eslint-and-prettier/package.json";
 
 const packageJson: unknown = await fs.readJSON("package.json").catch(() => {
 	console.error(
@@ -14,18 +15,12 @@ const packageJson: unknown = await fs.readJSON("package.json").catch(() => {
 
 const pkgJsonSchema = z
 	.object({
-		scripts: z
-			.object({
-				lint: z.string(),
-			})
-			.partial()
-			.passthrough(),
-		devDependencies: z
-			.object({
-				"@popup-io/styleguide-config": z.string(),
-			})
-			.partial()
-			.passthrough(),
+		name: z.string(),
+		version: z.string(),
+		private: z.boolean(),
+		scripts: z.object({}).catchall(z.string()),
+		dependencies: z.object({}).catchall(z.string()),
+		devDependencies: z.object({}).catchall(z.string()),
 	})
 	.partial()
 	.passthrough();
@@ -34,42 +29,68 @@ const newPackageJson = pkgJsonSchema.parse(packageJson);
 let packageJsonChanged = false;
 
 if (
-	newPackageJson.scripts?.lint &&
-	newPackageJson.scripts.lint !== "styleguide-lint"
+	newPackageJson.scripts?.["lint"] &&
+	newPackageJson.scripts["lint"] !== "eslint-and-prettier"
 ) {
 	const { confirm } = await inquirer.prompt<{ confirm: boolean }>({
 		type: "confirm",
 		name: "confirm",
-		message: `Your 'lint' script is currently '${newPackageJson.scripts.lint}'. Do you want to overwrite this?`,
+		message: `Your 'lint' script is currently '${newPackageJson.scripts["lint"]}'. Do you want to overwrite this?`,
 	});
 
 	if (confirm) {
 		newPackageJson.scripts ??= {};
-		newPackageJson.scripts.lint = "styleguide-lint";
+		newPackageJson.scripts["lint"] = "eslint-and-prettier";
 		packageJsonChanged = true;
 	}
 }
 
-let versionChanged = false;
-
+newPackageJson.devDependencies ??= {};
 if (
-	newPackageJson.devDependencies?.["@popup-io/styleguide-config"] !==
+	newPackageJson.devDependencies["@popup-io/styleguide-config"] !==
 	configPackageJson.version
 ) {
-	newPackageJson.devDependencies ??= {};
 	newPackageJson.devDependencies["@popup-io/styleguide-config"] =
 		configPackageJson.version;
 	packageJsonChanged = true;
-	versionChanged = true;
+}
+if (
+	newPackageJson.devDependencies["@popup-io/eslint-and-prettier"] !==
+	eslintAndPrettierPackageJson.version
+) {
+	newPackageJson.devDependencies["@popup-io/eslint-and-prettier"] =
+		eslintAndPrettierPackageJson.version;
+	packageJsonChanged = true;
+}
+
+for (const dep of ["eslint", "eslint-config-next"]) {
+	if (newPackageJson.dependencies?.[dep]) {
+		// eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+		delete newPackageJson.dependencies[dep];
+		packageJsonChanged = true;
+	}
+	if (newPackageJson.devDependencies[dep]) {
+		// eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+		delete newPackageJson.devDependencies[dep];
+		packageJsonChanged = true;
+	}
 }
 
 if (packageJsonChanged) {
-	await fs.writeJson("package.json", newPackageJson);
-	console.log("Changed package.json.");
-}
+	const sortObject = <T extends Record<string, unknown>>(o: T): T =>
+		Object.keys(o)
+			.sort()
+			// eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+			.reduce((r, k) => (((r as any)[k] = o[k]), r), {} as T);
+	if (newPackageJson.dependencies)
+		newPackageJson.dependencies = sortObject(newPackageJson.dependencies);
+	newPackageJson.devDependencies = sortObject(newPackageJson.devDependencies);
 
-if (versionChanged) {
+	await fs.writeJson("package.json", newPackageJson, { spaces: "\t" });
+	console.log("Changed package.json.");
 	console.log(
 		'You want to run "npm install", "yarn install" (or the alternative for your package manager) to get the latest config version.'
 	);
+} else {
+	console.log("Everything is up-to-date.");
 }
