@@ -98,5 +98,37 @@ if (packageJsonChanged) {
 		'You want to run "npm install", "yarn install" (or the alternative for your package manager) to get the latest config version.'
 	);
 } else {
-	console.log("Everything is up-to-date.");
+	console.log("Your package.json is up to date.");
 }
+
+for (const file of [".eslintrc.json", ".eslintrc.js"]) {
+	await fs.remove(file).catch(() => {
+		//ignore
+	});
+}
+
+await fs
+	.copyFile(
+		new URL("../assets/eslint.config.js", import.meta.url),
+		"eslint.config.js"
+	)
+	.then(() => {
+		console.log("Copied eslint.config.js.");
+	})
+	.catch((err) => {
+		console.error("Could not copy eslint.config.js.");
+		console.error(err);
+	});
+
+await fs
+	.copyFile(
+		new URL("../assets/.editorconfig", import.meta.url),
+		".editorconfig"
+	)
+	.then(() => {
+		console.log("Copied .editorconfig.");
+	})
+	.catch((err) => {
+		console.error("Could not copy .editorconfig");
+		console.error(err);
+	});
