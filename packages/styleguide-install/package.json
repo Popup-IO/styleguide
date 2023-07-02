@@ -8,7 +8,8 @@
 	"type": "module",
 	"scripts": {
 		"build": "tsup",
-		"watch": "tsup --watch"
+		"watch": "tsup --watch",
+		"prepublishOnly": "tsup"
 	},
 	"bin": {
 		"styleguide-install": "dist/index.js"
