@@ -8,6 +8,7 @@
 		"build": "lerna run build",
 		"watch": "lerna run watch --stream",
 		"lint": "eslint-and-prettier",
+		"format": "eslint-and-prettier --fix",
 		"postinstall": "rm -rf .editorconfig && cp packages/styleguide-install/assets/.editorconfig ./"
 	},
 	"devDependencies": {

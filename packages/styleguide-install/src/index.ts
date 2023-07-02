@@ -15,10 +15,11 @@ const packageJson: unknown = await fs.readJSON("package.json").catch(() => {
 
 const pkgJsonSchema = z
 	.object({
-		name: z.string(),
-		type: z.string(),
-		version: z.string(),
 		private: z.boolean(),
+		name: z.string(),
+		version: z.string(),
+		license: z.string(),
+		type: z.string(),
 		scripts: z.object({}).catchall(z.string()),
 		dependencies: z.object({}).catchall(z.string()),
 		devDependencies: z.object({}).catchall(z.string()),
@@ -34,21 +35,34 @@ if (newPackageJson.type !== "module") {
 	packageJsonChanged = true;
 }
 
-if (
-	newPackageJson.scripts?.["lint"] &&
-	newPackageJson.scripts["lint"] !== "eslint-and-prettier"
-) {
-	const { confirm } = await inquirer.prompt<{ confirm: boolean }>({
-		type: "confirm",
-		name: "confirm",
-		message: `Your 'lint' script is currently '${newPackageJson.scripts["lint"]}'. Do you want to overwrite this?`,
-	});
+const scripts = {
+	lint: "eslint-and-prettier",
+	format: "eslint-and-prettier --fix",
+};
 
-	if (confirm) {
-		newPackageJson.scripts ??= {};
-		newPackageJson.scripts["lint"] = "eslint-and-prettier";
-		packageJsonChanged = true;
+for (const [script, command] of Object.entries(scripts)) {
+	const oldCommand = newPackageJson.scripts?.[script];
+	if (oldCommand === command) {
+		continue;
 	}
+
+	const confirm =
+		!oldCommand ||
+		(await inquirer
+			.prompt<{ confirm: boolean }>({
+				type: "confirm",
+				name: "confirm",
+				message: `Your '${script}' script is currently '${oldCommand}'. Do you want to overwrite this to '${command}'?`,
+			})
+			.then((answers) => answers.confirm));
+
+	if (!confirm) {
+		continue;
+	}
+
+	newPackageJson.scripts ??= {};
+	newPackageJson.scripts[script] = command;
+	packageJsonChanged = true;
 }
 
 newPackageJson.devDependencies ??= {};
