@@ -13,7 +13,11 @@ const ignores = ignoreFile
 	.split("\n")
 	.filter((line) => line !== "" && !line.startsWith("#"))
 	.flatMap((line) =>
-		line.includes("/") ? line : [line, "**/" + line + "/**"]
+		// If the line contains a /, it is always only valid from the root. In that
+		// case, emove the leading slash, because eslint doesn't support it.
+		// Otherwise, also add **/ at the beginning and end to make it work from
+		// everywhere.
+		line.includes("/") ? line.replace(/^\//, "") : [line, "**/" + line + "/**"]
 	);
 
 const config: Linter.FlatConfig[] = [
