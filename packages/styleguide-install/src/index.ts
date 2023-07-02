@@ -16,6 +16,7 @@ const packageJson: unknown = await fs.readJSON("package.json").catch(() => {
 const pkgJsonSchema = z
 	.object({
 		name: z.string(),
+		type: z.string(),
 		version: z.string(),
 		private: z.boolean(),
 		scripts: z.object({}).catchall(z.string()),
@@ -27,6 +28,11 @@ const pkgJsonSchema = z
 
 const newPackageJson = pkgJsonSchema.parse(packageJson);
 let packageJsonChanged = false;
+
+if (newPackageJson.type !== "module") {
+	newPackageJson.type = "module";
+	packageJsonChanged = true;
+}
 
 if (
 	newPackageJson.scripts?.["lint"] &&
