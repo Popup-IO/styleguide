@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 2
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -33,6 +33,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-        run: npx lerna publish --canary --yes
+        run: npx lerna publish --canary --force-publish --yes
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
