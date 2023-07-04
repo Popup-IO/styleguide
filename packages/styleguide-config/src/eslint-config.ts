@@ -5,6 +5,7 @@ import eslintJs from "@eslint/js";
 import tsEslint from "@typescript-eslint/eslint-plugin";
 import * as tsEslintParser from "@typescript-eslint/parser";
 import prettier from "eslint-plugin-prettier";
+import prettierConfig from "eslint-config-prettier";
 import type { ESLint, Linter } from "eslint";
 import { readFileSync } from "fs";
 
@@ -33,14 +34,6 @@ const config: Linter.FlatConfig[] = [
 
 	// Add all recommended rules from eslint.
 	eslintJs.configs.recommended,
-
-	// Add prettier formatting.
-	{
-		plugins: { prettier },
-		rules: {
-			"prettier/prettier": "error",
-		},
-	},
 
 	// The @typescript-eslint plugin is not yet optimized for the new ESLint configuration format.
 	// This is the same as the 'base' config, but for the new format.
@@ -96,6 +89,16 @@ const config: Linter.FlatConfig[] = [
 	},
 	reactRecommended,
 	reactJsxRuntime,
+
+	// Add prettier formatting.
+	// It is added last, so it can override all other rules.
+	{
+		plugins: { prettier },
+		rules: {
+			...prettierConfig.rules,
+			...(prettier.configs?.["recommended"]?.rules as Linter.RulesRecord),
+		},
+	},
 ];
 
 export default config;

@@ -7,6 +7,14 @@ declare module "@eslint/js" {
 	export { configs };
 }
 
+declare module "eslint-config-prettier" {
+	import { Linter } from "eslint";
+	const config: {
+		rules: Linter.RulesRecord;
+	};
+	export = config;
+}
+
 declare module "eslint-plugin-prettier" {
 	import { ESLint } from "eslint";
 	const plugin: ESLint.Plugin;
