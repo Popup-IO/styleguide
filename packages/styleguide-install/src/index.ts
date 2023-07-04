@@ -146,3 +146,13 @@ await fs
 		console.error("Could not copy .editorconfig");
 		console.error(err);
 	});
+
+await fs
+	.ensureSymlink(".gitignore", ".prettierignore")
+	.then(() => {
+		console.log("Created symlink .prettierignore -> .gitignore.");
+	})
+	.catch((err) => {
+		console.error("Could not create a symlink .prettierignore -> .gitignore.");
+		console.error(err);
+	});
