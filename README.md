@@ -15,8 +15,10 @@ This is not a completely new styleguide. Instead, it combines already existing p
   - Tabs-based indentation for better accessibility (indent size is 2)
 - ESLint
   - All recomended [rules](https://eslint.org/docs/latest/rules/)
+- ESLint React Rules of Hooks
+  - [Both rules](https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks)
 - ESLint React
-  - All [recommended rules](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/configs/recommended.js) [for the latest JSX runtime](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/configs/jsx-runtime.js).
+  - All [recommended rules](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/configs/recommended.js) [for the latest JSX runtime](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/configs/jsx-runtime.js)
 - TypeScript
   - The [strictest](https://github.com/tsconfig/bases/blob/main/bases/strictest.json) config
   - The [recommended](https://github.com/tsconfig/bases/blob/main/bases/recommended.json) config

@@ -1,3 +1,4 @@
+import reactHooks from "eslint-plugin-react-hooks";
 import reactRecommended from "eslint-plugin-react/configs/recommended.js";
 import reactJsxRuntime from "eslint-plugin-react/configs/jsx-runtime.js";
 import * as globals from "globals";
@@ -70,6 +71,14 @@ const config: Linter.FlatConfig[] = [
 	{
 		rules: tsEslint.configs["stylistic-type-checked"]
 			?.rules as Linter.RulesRecord,
+	},
+
+	// Add the react-hooks plugin and recommended rules.
+	{
+		plugins: { "react-hooks": reactHooks },
+	},
+	{
+		rules: reactHooks.configs?.["recommended"]?.rules as Linter.RulesRecord,
 	},
 
 	// Add the react plugin and recommended rules.

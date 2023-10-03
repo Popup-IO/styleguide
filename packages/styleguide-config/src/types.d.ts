@@ -21,6 +21,12 @@ declare module "eslint-plugin-prettier" {
 	export = plugin;
 }
 
+declare module "eslint-plugin-react-hooks" {
+	import { ESLint } from "eslint";
+	const plugin: ESLint.Plugin;
+	export = plugin;
+}
+
 declare module "eslint-plugin-react" {
 	import { ESLint } from "eslint";
 	const plugin: ESLint.Plugin;
