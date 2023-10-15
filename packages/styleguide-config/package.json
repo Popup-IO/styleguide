@@ -18,23 +18,23 @@
 	},
 	"dependencies": {
 		"@eslint/js": "^8.38.0",
-		"@tsconfig/next": "^1.0.5",
-		"@tsconfig/recommended": "^1.0.2",
-		"@tsconfig/strictest": "^2.0.0",
-		"@types/eslint": "^8.37.0",
-		"@typescript-eslint/eslint-plugin": "^6.0.0-alpha.131",
-		"@typescript-eslint/parser": "^6.0.0-alpha.131",
+		"@tsconfig/next": "^2.0.1",
+		"@tsconfig/recommended": "^1.0.3",
+		"@tsconfig/strictest": "^2.0.2",
+		"@types/eslint": "^8.44.4",
+		"@typescript-eslint/eslint-plugin": "^6.7.5",
+		"@typescript-eslint/parser": "^6.7.5",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.1",
-		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react": "^7.33.2",
 		"eslint-plugin-react-hooks": "^4.6.0",
-		"globals": "^13.20.0",
+		"globals": "^13.23.0",
 		"prettier": "^3.0.3",
 		"prettier-plugin-organize-imports": "^3.2.3",
 		"prettier-plugin-packagejson": "^2.4.6"
 	},
 	"peerDependencies": {
-		"eslint": "^8.38.0"
+		"eslint": "^8.51.0"
 	},
 	"publishConfig": {
 		"access": "public"

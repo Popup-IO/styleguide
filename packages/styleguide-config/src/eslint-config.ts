@@ -40,7 +40,7 @@ const config: Linter.FlatConfig[] = [
 	// This is the same as the 'base' config, but for the new format.
 	{
 		plugins: {
-			"@typescript-eslint": tsEslint as ESLint.Plugin,
+			"@typescript-eslint": tsEslint as unknown as ESLint.Plugin,
 		},
 		languageOptions: {
 			parser: tsEslintParser,
@@ -78,7 +78,8 @@ const config: Linter.FlatConfig[] = [
 		plugins: { "react-hooks": reactHooks },
 	},
 	{
-		rules: reactHooks.configs?.["recommended"]?.rules as Linter.RulesRecord,
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		rules: (reactHooks.configs?.["recommended"] as Linter.FlatConfig).rules!,
 	},
 
 	// Add the react plugin and recommended rules.
@@ -105,7 +106,7 @@ const config: Linter.FlatConfig[] = [
 		plugins: { prettier },
 		rules: {
 			...prettierConfig.rules,
-			...(prettier.configs?.["recommended"]?.rules as Linter.RulesRecord),
+			...(prettier.configs?.["recommended"] as Linter.FlatConfig).rules,
 		},
 	},
 ];

@@ -11,7 +11,7 @@
 		"watch": "tsup --watch"
 	},
 	"dependencies": {
-		"execa": "^7.1.1"
+		"execa": "^8.0.1"
 	},
 	"publishConfig": {
 		"access": "public"
