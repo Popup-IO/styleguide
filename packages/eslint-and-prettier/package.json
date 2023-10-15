@@ -1,19 +1,19 @@
 {
 	"name": "@popup-io/eslint-and-prettier",
 	"version": "0.0.1",
-	"publishConfig": {
-		"access": "public"
-	},
-	"main": "dist/index.js",
 	"type": "module",
+	"main": "dist/index.js",
+	"bin": {
+		"eslint-and-prettier": "dist/index.js"
+	},
 	"scripts": {
 		"build": "tsup",
 		"watch": "tsup --watch"
 	},
-	"bin": {
-		"eslint-and-prettier": "dist/index.js"
-	},
 	"dependencies": {
 		"execa": "^7.1.1"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }

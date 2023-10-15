@@ -28,6 +28,7 @@ This is not a completely new styleguide. Instead, it combines already existing p
   - All strict-type-checked rules
   - All stylistic-type-checked rules
 - [Prettier Plugin: Organize Imports](https://www.npmjs.com/package/prettier-plugin-organize-imports)
+- [Prettier Plugin: Packagejson](https://www.npmjs.com/package/prettier-plugin-packagejson)
 
 ## Adjusting the styleguide
 

@@ -1,14 +1,14 @@
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRecommended from "eslint-plugin-react/configs/recommended.js";
-import reactJsxRuntime from "eslint-plugin-react/configs/jsx-runtime.js";
-import * as globals from "globals";
 import eslintJs from "@eslint/js";
 import tsEslint from "@typescript-eslint/eslint-plugin";
 import * as tsEslintParser from "@typescript-eslint/parser";
-import prettier from "eslint-plugin-prettier";
-import prettierConfig from "eslint-config-prettier";
 import type { ESLint, Linter } from "eslint";
+import prettierConfig from "eslint-config-prettier";
+import prettier from "eslint-plugin-prettier";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactJsxRuntime from "eslint-plugin-react/configs/jsx-runtime.js";
+import reactRecommended from "eslint-plugin-react/configs/recommended.js";
 import { readFileSync } from "fs";
+import * as globals from "globals";
 
 const ignoreFile = readFileSync(".gitignore", "utf8");
 const ignores = ignoreFile
@@ -19,7 +19,7 @@ const ignores = ignoreFile
 		// case, emove the leading slash, because eslint doesn't support it.
 		// Otherwise, also add **/ at the beginning and end to make it work from
 		// everywhere.
-		line.includes("/") ? line.replace(/^\//, "") : [line, "**/" + line + "/**"]
+		line.includes("/") ? line.replace(/^\//, "") : [line, "**/" + line + "/**"],
 	);
 
 const config: Linter.FlatConfig[] = [

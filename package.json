@@ -1,23 +1,23 @@
 {
-	"private": true,
 	"name": "styleguide",
 	"version": "0.0.0",
+	"private": true,
 	"license": "MIT",
 	"type": "module",
+	"workspaces": [
+		"packages/*"
+	],
 	"scripts": {
 		"build": "lerna run build",
-		"watch": "lerna run watch --stream",
-		"lint": "eslint-and-prettier",
 		"format": "eslint-and-prettier --fix",
-		"postinstall": "rm -rf .editorconfig && cp packages/styleguide-install/assets/.editorconfig ./"
+		"postinstall": "rm -rf .editorconfig && cp packages/styleguide-install/assets/.editorconfig ./",
+		"lint": "eslint-and-prettier",
+		"watch": "lerna run watch --stream"
 	},
 	"devDependencies": {
 		"@types/node": "^18.15.11",
 		"lerna": "^6.6.2",
 		"tsup": "^6.7.0",
 		"typescript": "^5.0.4"
-	},
-	"workspaces": [
-		"packages/*"
-	]
+	}
 }

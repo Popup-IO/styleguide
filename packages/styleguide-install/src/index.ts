@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 import fs from "fs-extra";
-import { z } from "zod";
 import inquirer from "inquirer";
-import configPackageJson from "../../styleguide-config/package.json";
+import { z } from "zod";
 import eslintAndPrettierPackageJson from "../../eslint-and-prettier/package.json";
+import configPackageJson from "../../styleguide-config/package.json";
 
 const packageJson: unknown = await fs.readJSON("package.json").catch(() => {
 	console.error(
-		"Could not read or find a package.json file in this directory. Are you sure you are inside the repository you want to add linting to?"
+		"Could not read or find a package.json file in this directory. Are you sure you are inside the repository you want to add linting to?",
 	);
 	process.exit(1);
 });
@@ -109,7 +109,7 @@ if (packageJsonChanged) {
 	await fs.writeJson("package.json", newPackageJson, { spaces: "\t" });
 	console.log("Changed package.json.");
 	console.log(
-		'You want to run "npm install", "yarn install" (or the alternative for your package manager) to get the latest config version.'
+		'You want to run "npm install", "yarn install" (or the alternative for your package manager) to get the latest config version.',
 	);
 } else {
 	console.log("Your package.json is up to date.");
@@ -121,31 +121,19 @@ for (const file of [".eslintrc.json", ".eslintrc.js"]) {
 	});
 }
 
-await fs
-	.copyFile(
-		new URL("../assets/eslint.config.js", import.meta.url),
-		"eslint.config.js"
-	)
-	.then(() => {
-		console.log("Copied eslint.config.js.");
-	})
-	.catch((err) => {
-		console.error("Could not copy eslint.config.js.");
+async function copyFile(asset: string) {
+	try {
+		await fs.copyFile(new URL(`../assets/${asset}`, import.meta.url), asset);
+		console.log(`Copied ${asset}.`);
+	} catch (err) {
+		console.error(`Could not copy ${asset}.`);
 		console.error(err);
-	});
+	}
+}
 
-await fs
-	.copyFile(
-		new URL("../assets/.editorconfig", import.meta.url),
-		".editorconfig"
-	)
-	.then(() => {
-		console.log("Copied .editorconfig.");
-	})
-	.catch((err) => {
-		console.error("Could not copy .editorconfig");
-		console.error(err);
-	});
+await copyFile(".editorconfig");
+await copyFile("prettier.config.mjs");
+await copyFile("eslint.config.js");
 
 await fs
 	.ensureSymlink(".gitignore", ".prettierignore")
