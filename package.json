@@ -12,6 +12,7 @@
 		"format": "eslint-and-prettier --fix",
 		"postinstall": "rm -rf .editorconfig && cp packages/styleguide-install/assets/.editorconfig ./",
 		"lint": "eslint-and-prettier",
+		"version": "prettier --write lerna.json",
 		"watch": "lerna run watch --stream"
 	},
 	"devDependencies": {
